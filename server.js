@@ -1,17 +1,10 @@
 const hapi = require('hapi');
 const vision = require('vision');
 const path = require('path');
+const routes = require('./routes/index.js');
 
 const server = new hapi.Server()
 
-const handler = (request, reply) => {
-
-  let data =  {
-    title: 'Our title',
-    message: 'HELP ME I AM BACKWARDS'
-  }
-  reply.view('index', data);
-}
 
 server.connection({
   host: 'localhost',
@@ -26,11 +19,14 @@ server.register(vision, function(err){
       hbs:require('handlebars')
     },
     relativeTo: __dirname,
-    helpersPath: 'templates/helpers',
-    path: 'templates'
+    helpersPath: 'views/helpers',
+    path: 'views',
+    layout: 'default',
+    partialsPath: 'views/partials',
+    layoutPath: 'views/layout'
   })
 
-  server.route({ path: '/', method: 'GET', handler});
+  server.route(routes);
 
   server.start((err) => {
     if (err) throw err;
