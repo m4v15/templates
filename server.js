@@ -6,10 +6,11 @@ const server = new hapi.Server()
 
 const handler = (request, reply) => {
 
-  reply.view('index', {
+  let data =  {
     title: 'Our title',
     message: 'HELP ME I AM BACKWARDS'
-  });
+  }
+  reply.view('index', data);
 }
 
 server.connection({
